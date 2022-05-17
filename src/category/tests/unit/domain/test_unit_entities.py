@@ -11,7 +11,7 @@ class TestCategoryUnit(unittest.TestCase):
 
     def test_constructor_with_mandatory_params(self):
         data = {
-            'name': 'Movie', 
+            'name': 'Category', 
         }
 
         category = Category(**data)
