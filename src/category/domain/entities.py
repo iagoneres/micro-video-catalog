@@ -3,12 +3,11 @@ from dataclasses import dataclass, field
 from typing import Optional
 import uuid
 
-@dataclass(kw_only=True)
-class Category:
+from __seedwork.domain.entities import Entity
 
-    id: uuid.UUID = field(
-        default_factory=lambda: uuid.uuid4()
-    )
+@dataclass(kw_only=True, frozen=True)
+class Category(Entity):
+
     name: str
     description: Optional[str] = None
     is_active: Optional[bool] = True
