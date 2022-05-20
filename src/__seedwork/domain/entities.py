@@ -9,10 +9,10 @@ class Entity(ABC):
     unique_entity_id: UniqueEntityId = field(default_factory=lambda: UniqueEntityId())
 
     @property
-    def id(self):
+    def id(self) -> str:
         return str(self.unique_entity_id)
     
-    def to_dict(self):
+    def to_dict(self) -> dict:
         entity_dict = asdict(self)
         entity_dict.pop('unique_entity_id')
         entity_dict['id'] = self.id
