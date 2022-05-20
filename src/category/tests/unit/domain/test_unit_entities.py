@@ -4,6 +4,7 @@ import unittest
 
 from category.domain.entities import Category
 
+
 class TestCategoryUnit(unittest.TestCase):
 
     def test_if_is_a_dataclass(self):
@@ -11,7 +12,7 @@ class TestCategoryUnit(unittest.TestCase):
 
     def test_constructor_with_mandatory_params(self):
         data = {
-            'name': 'Category', 
+            'name': 'Category',
         }
 
         category = Category(**data)
@@ -20,12 +21,12 @@ class TestCategoryUnit(unittest.TestCase):
         self.assertEqual(category.description, None)
         self.assertEqual(category.is_active, True)
         self.assertIsInstance(category.created_at, datetime)
-    
+
     def test_constructor(self):
         data = {
             'name': 'Category',
-            'description': 'some description', 
-            'is_active': False, 
+            'description': 'some description',
+            'is_active': False,
             'created_at': datetime.now()
         }
         category = Category(**data)
@@ -44,7 +45,7 @@ class TestCategoryUnit(unittest.TestCase):
             category_1.created_at.timestamp(),
             category_2.created_at.timestamp()
         )
-    
+
     def test_is_immutable(self):
         with self.assertRaises(FrozenInstanceError):
             value_object = Category(name="Teste")

@@ -12,16 +12,18 @@ from __seedwork.domain.value_objects import UniqueEntityId, ValueObject
 class StubOneAttribute(ValueObject):
     attribute_1: str
 
+
 @dataclass(frozen=True)
 class StubTwoAttributes(ValueObject):
     attribute_1: str
     attribute_2: str
 
+
 class TestValueObjectUnit(unittest.TestCase):
-    
+
     def test_if_is_a_dataclass(self):
         self.assertTrue(is_dataclass(ValueObject))
-    
+
     def test_if_is_a_abstract_class(self):
         self.assertIsInstance(ValueObject(), ABC)
 
@@ -29,7 +31,8 @@ class TestValueObjectUnit(unittest.TestCase):
         value_object_1 = StubOneAttribute(attribute_1="value1")
         self.assertEqual(value_object_1.attribute_1, 'value1')
 
-        value_object_2 = StubTwoAttributes(attribute_1="value1", attribute_2="value2")
+        value_object_2 = StubTwoAttributes(
+            attribute_1="value1", attribute_2="value2")
         self.assertEqual(value_object_2.attribute_1, 'value1')
         self.assertEqual(value_object_2.attribute_2, 'value2')
 
@@ -37,8 +40,11 @@ class TestValueObjectUnit(unittest.TestCase):
         value_object_1 = StubOneAttribute(attribute_1="value1")
         self.assertEqual(value_object_1.attribute_1, str(value_object_1))
 
-        value_object_2 = StubTwoAttributes(attribute_1="value1", attribute_2="value2")
-        self.assertEqual('{"attribute_1": "value1", "attribute_2": "value2"}', str(value_object_2))
+        value_object_2 = StubTwoAttributes(
+            attribute_1="value1", attribute_2="value2")
+        self.assertEqual(
+            '{"attribute_1": "value1", "attribute_2": "value2"}', str(value_object_2))
+
 
 class TestUniqueEntityIdUnit(unittest.TestCase):
 
@@ -55,7 +61,8 @@ class TestUniqueEntityIdUnit(unittest.TestCase):
             with self.assertRaises(InvalidUuidException) as assert_error:
                 UniqueEntityId('Fake ID')
             mock_validate.assert_called_once()
-            self.assertEqual(assert_error.exception.args[0], 'ID must be a valid UUID')
+            self.assertEqual(
+                assert_error.exception.args[0], 'ID must be a valid UUID')
 
     def test_accept_uuid_passed_in_constructor(self):
         with patch.object(
@@ -64,9 +71,11 @@ class TestUniqueEntityIdUnit(unittest.TestCase):
             autospec=True,
             side_effect=UniqueEntityId._UniqueEntityId__validate
         ) as mock_validate:
-            value_object = UniqueEntityId('08976216-4179-40bd-ba77-d357c95b9bba')
+            value_object = UniqueEntityId(
+                '08976216-4179-40bd-ba77-d357c95b9bba')
             mock_validate.assert_called_once()
-            self.assertEqual(value_object.id, '08976216-4179-40bd-ba77-d357c95b9bba')
+            self.assertEqual(
+                value_object.id, '08976216-4179-40bd-ba77-d357c95b9bba')
 
     def test_uuid_conversion_to_str_on_create(self):
         with patch.object(
@@ -90,7 +99,7 @@ class TestUniqueEntityIdUnit(unittest.TestCase):
             value_object = UniqueEntityId()
             uuid.UUID(value_object.id)
             mock_validate.assert_called_once()
-    
+
     def test_is_immutable(self):
         with self.assertRaises(FrozenInstanceError):
             value_object = UniqueEntityId()

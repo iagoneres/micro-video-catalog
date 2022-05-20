@@ -15,6 +15,7 @@ class ValueObject(ABC):
             if len(field_names) == 1 \
             else json.dumps({field_name: getattr(self, field_name) for field_name in field_names})
 
+
 @dataclass(frozen=True)
 class UniqueEntityId(ValueObject):
 
@@ -36,4 +37,3 @@ class UniqueEntityId(ValueObject):
 
     def __str__(self) -> str:
         return f"{self.id}"
-1

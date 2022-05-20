@@ -5,6 +5,7 @@ import uuid
 
 from __seedwork.domain.entities import Entity
 
+
 @dataclass(kw_only=True, frozen=True)
 class Category(Entity):
 

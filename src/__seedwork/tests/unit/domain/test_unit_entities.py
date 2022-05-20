@@ -5,16 +5,18 @@ import unittest
 from __seedwork.domain.entities import Entity
 from __seedwork.domain.value_objects import UniqueEntityId
 
+
 @dataclass(frozen=True, kw_only=True)
 class StubEntity(Entity):
     attribute_1: str
     attribute_2: str
 
+
 class TestEntityUnit(unittest.TestCase):
 
     def test_if_is_a_dataclass(self):
         self.assertTrue(is_dataclass(Entity))
-    
+
     def test_if_is_a_abstract_class(self):
         self.assertIsInstance(Entity(), ABC)
 
