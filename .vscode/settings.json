@@ -19,5 +19,7 @@
         "__pypackages__"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 79
 }
