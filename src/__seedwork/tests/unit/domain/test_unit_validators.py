@@ -27,7 +27,8 @@ class TestValidatorRules(unittest.TestCase):
                 ValidatorRules.values(
                     data['value'], data['attribute']).required()
 
-            self.assertEqual('The "attribute" is required.',
+            expected_message = 'The "attribute" is required.'
+            self.assertEqual(expected_message,
                              assert_error.exception.args[0])
 
     def test_required_rule_with_valid_values(self):
@@ -59,7 +60,8 @@ class TestValidatorRules(unittest.TestCase):
                 ValidatorRules.values(
                     data['value'], data['attribute']).string()
 
-            self.assertEqual('The "attribute" must be a string.',
+            expected_message = 'The "attribute" must be a string.'
+            self.assertEqual(expected_message,
                              assert_error.exception.args[0])
 
     def test_string_rule_with_valid_values(self):
