@@ -44,3 +44,34 @@ class TestValidatorRules(unittest.TestCase):
                     data['value'], data['attribute']).required(),
                 ValidatorRules
             )
+
+    def test_string_rules_with_invalid_values(self):
+
+        invalid_data = [
+            {'value': 5, 'attribute': 'attribute'},
+            {'value': True, 'attribute': 'attribute'},
+            {'value': {}, 'attribute': 'attribute'}
+        ]
+
+        for data in invalid_data:
+            message = f"value: {data['value']}, attribute: {data['attribute']}"
+            with self.assertRaises(ValidationException, msg=message) as assert_error:
+                ValidatorRules.values(
+                    data['value'], data['attribute']).string()
+
+            self.assertEqual('The "attribute" must be a string.',
+                             assert_error.exception.args[0])
+
+    def test_string_rules_with_valid_values(self):
+        valid_data = [
+            {'value': None, 'attribute': 'attribute'},
+            {'value': "", 'attribute': 'attribute'},
+            {'value': 'some value', 'attribute': 'attribute'},
+        ]
+
+        for data in valid_data:
+            self.assertIsInstance(
+                ValidatorRules.values(
+                    data['value'], data['attribute']).string(),
+                ValidatorRules
+            )
