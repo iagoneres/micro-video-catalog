@@ -27,7 +27,7 @@ class ValidatorRules:
     def max_length(self, max_length: int) -> 'ValidatorRules':
         if self.value is not None and len(self.value) > max_length:
             raise ValidationException(
-                f'The "{self.attribute}" mus be less than {max_length} characters.')
+                f'The "{self.attribute}" must be less than {max_length} characters.')
         return self
 
     def boolean(self) -> 'ValidatorRules':
