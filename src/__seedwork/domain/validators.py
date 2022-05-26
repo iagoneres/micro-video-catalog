@@ -33,5 +33,5 @@ class ValidatorRules:
     def boolean(self) -> 'ValidatorRules':
         if self.value is not None and self.value is not True and self.value is not False:
             raise ValidationException(
-                f'The "{self.attribute}" must be a boolean')
+                f'The "{self.attribute}" must be a boolean.')
         return self

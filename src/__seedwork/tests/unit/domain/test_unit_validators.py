@@ -107,3 +107,34 @@ class TestValidatorRules(unittest.TestCase):
                     data['value'], data['attribute']).max_length(value_length),
                 ValidatorRules
             )
+
+    def test_boolean_rule_with_invalid_values(self):
+
+        invalid_data = [
+            {'value': "", 'attribute': 'attribute'},
+            {'value': {}, 'attribute': 'attribute'},
+            {'value': 5, 'attribute': 'attribute'},
+        ]
+
+        for data in invalid_data:
+            message = f"value: {data['value']}, attribute: {data['attribute']}"
+            with self.assertRaises(ValidationException, msg=message) as assert_error:
+                ValidatorRules.values(
+                    data['value'], data['attribute']).boolean()
+
+            expected_message = 'The "attribute" must be a boolean.'
+            self.assertEqual(expected_message, assert_error.exception.args[0])
+
+    def test_boolean_rule_with_valid_values(self):
+        valid_data = [
+            {'value': True, 'attribute': 'attribute'},
+            {'value': False, 'attribute': 'attribute'},
+            {'value': None, 'attribute': 'attribute'},
+        ]
+
+        for data in valid_data:
+            self.assertIsInstance(
+                ValidatorRules.values(
+                    data['value'], data['attribute']).boolean(),
+                ValidatorRules
+            )
