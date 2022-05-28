@@ -1,6 +1,5 @@
 from dataclasses import FrozenInstanceError, is_dataclass
 from datetime import datetime
-from unicodedata import name
 import unittest
 from unittest.mock import patch
 
