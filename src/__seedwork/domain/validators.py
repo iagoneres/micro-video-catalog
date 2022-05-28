@@ -1,5 +1,7 @@
+from abc import ABC
+import abc
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Dict, Generic, List, TypeVar
 
 from __seedwork.domain.exceptions import ValidationException
 
@@ -35,3 +37,17 @@ class ValidatorRules:
             raise ValidationException(
                 f'The "{self.attribute}" must be a boolean.')
         return self
+
+
+ErrorFields = Dict[str, List[str]]
+AttributesValidated = TypeVar('AttributesValidated')
+
+
+@dataclass(slots=True)
+class ValidatorFieldsInterface(ABC, Generic[AttributesValidated]):
+    errors: ErrorFields = None
+    validated_data: AttributesValidated = None
+
+    @abc.abstractmethod
+    def validate(self, data: Any) -> bool:
+        raise NotImplementedError()
