@@ -1,7 +1,8 @@
+from dataclasses import fields
 from typing import Any
 import unittest
 
-from __seedwork.domain.validators import ValidatorRules
+from __seedwork.domain.validators import ValidatorFieldsInterface, ValidatorRules
 from __seedwork.domain.exceptions import ValidationException
 
 
@@ -138,3 +139,27 @@ class TestValidatorRules(unittest.TestCase):
                     data['value'], data['attribute']).boolean(),
                 ValidatorRules
             )
+
+
+class TestValidatorFieldsInterface(unittest.TestCase):
+
+    def test_throw_error_when_validate_method_not_implemented(self):
+        with self.assertRaises(TypeError) as assert_error:
+            ValidatorFieldsInterface()
+
+        self.assertEqual(
+            assert_error.exception.args[0], "Can't instantiate abstract class ValidatorFieldsInterface with abstract method validate")
+
+    def test_errors_field_in_initialization(self):
+        fields_class = fields(ValidatorFieldsInterface)
+
+        errors_field = fields_class[0]
+        self.assertEqual(errors_field.name, 'errors')
+        self.assertIsNone(errors_field.default)
+
+    def test_validated_data_field_in_initialization(self):
+        fields_class = fields(ValidatorFieldsInterface)
+
+        validated_data = fields_class[1]
+        self.assertEqual(validated_data.name, 'validated_data')
+        self.assertIsNone(validated_data.default)
